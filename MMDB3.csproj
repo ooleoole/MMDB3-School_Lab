@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ImageResources.cs" />
     <Compile Include="MovieDatabase\Repositories\CastOrCrewRepository.cs" />
     <Compile Include="MovieDatabase\Domain\Entities\Movie.cs" />
     <Compile Include="MovieDatabase\Repositories\MovieRepository.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="MovieDatabase\Services\SearchService.cs" />
     <Compile Include="MovieDatabase\Helper\StringUtil.cs" />
     <Compile Include="SearchResultItemStringConverter.cs" />
+    <Compile Include="TypeToImageConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,7 +97,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -107,13 +110,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\actor.png" />
+    <Resource Include="Resources\actor.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\movie.png" />
+    <Resource Include="Resources\movie.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\director.png" />
+    <Resource Include="Resources\director.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="CastOrCrew.xml" />
@@ -124,6 +127,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

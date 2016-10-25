@@ -24,6 +24,11 @@ namespace MMDB3
     public partial class MainWindow : Window
     {
         private FreeTextSearchService SearchService { get; set; }
+        public BitmapImage ActorIcon { get; set; }
+        public BitmapImage ActorDirectorIcon { get; set; }
+        public BitmapImage DirectorIcon { get; set; }
+        public BitmapImage MovieIcon { get; set; }
+        public BitmapImage UnknownIcon { get; set; }
 
         public MainWindow()
         {
@@ -48,5 +53,15 @@ namespace MMDB3
         {
             var test = LBCastCrewOrMovie.SelectedItem;
         }
+
+        private void LoadProps()
+        {
+            this.ActorIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/actor.png"));
+            this.ActorDirectorIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/actorDirector.png"));
+            this.DirectorIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/director"));
+            this.MovieIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/movie"));
+           // this.UnknownIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/unknown"));
+        }
+
     }
 }

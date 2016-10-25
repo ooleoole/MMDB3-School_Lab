@@ -8,10 +8,12 @@
         Title="MainWindow" Height="600" Width="800">
     <Window.Resources>
         <local:SearchResultItemStringConverter x:Key="SearchResultItemStringConverter"/>
-        <BitmapImage x:Key="ImageSourceActor" UriSource="C:\Users\Ola\Desktop\MMDB3\Resources\actor.png"/>
-        <BitmapImage x:Key="ImageSourceDirector" UriSource="C:\Users\Ola\Desktop\MMDB3\Resources\director.png"/>
-        <BitmapImage x:Key="ImageSourceActorDirector" UriSource="C:\Users\Ola\Desktop\MMDB3\Resources\actor_director.png"/>
-        <BitmapImage x:Key="ImageSourceMovie" UriSource="C:\Users\Ola\Desktop\MMDB3\Resources\movie.png"/>
+        <local:TypeToImageConverter x:Key="TypeToImageConverter"/>
+        
+        <Image x:Key="ImageSourceActor" Source="Resources/actor.png"/>
+        <Image x:Key="ImageSourceDirector" Source="Resources\director.png"/>
+        <Image x:Key="ImageSourceActorDirector" Source="Resources\actor_director.png"/>
+        <Image x:Key="ImageSourceMovie" Source="Resources\movie.png"/>
     </Window.Resources>
 
     <Grid>
@@ -47,20 +49,20 @@
                             <Image.Style>
                                 <Style TargetType="{x:Type Image}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path= Type}" Value="Director">
-                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\director.png" />
-                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding Path= Type}" Value="Actor">
-                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\actor.png" />
+                                            <Setter Property="Source" Value= "Resources/unknown.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path= Type}" Value="Director">
+                                            <Setter Property="Source" Value="Resources/unknown.png" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path= Type}" Value="ActorDirector">
-                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\actor_director.png" />
+                                            <Setter Property="Source" Value="Resources/unknown.png" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path= Type}" Value="Movie">
-                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\movie.png" />
+                                            <Setter Property="Source" Value="Resources/unknown.png" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=Type}" Value="None">
-                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\unknown.png" />
+                                            <Setter Property="Source" Value="Resources/unknown.png" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -81,12 +83,15 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
-                <Image Source="C:\Users\Ola\Desktop\MMDB3\Resources\actor.png"></Image>
-                <TextBlock Margin="5" Text="Test 1976-1647" FontSize="34"/>
-            </StackPanel>
-            
+                <Image Source="Resources/unknown.png"/>
+                <Image Source="Resources/actor_director.png"/>
+                <Image Source="Resources/director.png"/>
+                <Image Source="Resources/movie.png"/>
 
+                <TextBlock Margin="5" Text="Test 1976-1647" FontSize="34"/>
             
+         </StackPanel>
+
         </Grid>
     </Grid>
 
