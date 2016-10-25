@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MMDB.MovieDatabase.Domain;
 using MMDB.MovieDatabase.Services;
 using MMDB.MovieDatabase.ValueObjects;
 
@@ -34,7 +36,8 @@ namespace MMDB3
         {
             InitializeComponent();
             SearchService = new FreeTextSearchService();
-           
+            //ImageIcon.Source = null;
+
 
         }
 
@@ -51,17 +54,34 @@ namespace MMDB3
 
         private void LBCastCrewOrMovie_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var test = LBCastCrewOrMovie.SelectedItem;
+            var selectedObject = (SearchResultItem)LBCastCrewOrMovie.SelectedItem;
+            SPSelectedItemHeader.DataContext = selectedObject;
+            
+            if (selectedObject==null)
+            {
+                
+                SPSelectedItemHeader.DataContext = null;
+            }
+            else
+            {
+                if (selectedObject.GetType()==typeof(CastOrCrewSearchResultItem))
+                {
+                    TBActorsActor.Text = "Actor in";
+                    TBDirectorsDirector.Text="Director In";
+                }
+                else if (selectedObject.GetType() == (typeof(MovieSearchResultItem)))
+                {
+                    TBActorsActor.Text = "Actors";
+                    TBDirectorsDirector.Text = "Directors";
+
+                }
+                
+                
+            }
+          
         }
 
-        private void LoadProps()
-        {
-            this.ActorIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/actor.png"));
-            this.ActorDirectorIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/actorDirector.png"));
-            this.DirectorIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/director"));
-            this.MovieIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/movie"));
-           // this.UnknownIcon = new BitmapImage(new Uri("pack://application:,,,/Resources/unknown"));
-        }
+        
 
     }
 }

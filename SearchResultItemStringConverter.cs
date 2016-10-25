@@ -16,6 +16,10 @@ namespace MMDB3
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value==null)
+            {
+                return null;
+            }
             if (value.GetType() == typeof(MovieSearchResultItem)||value.GetType()==typeof(CastOrCrewSearchResultItem))
             {
                 var searchResultItem = (SearchResultItem)value;

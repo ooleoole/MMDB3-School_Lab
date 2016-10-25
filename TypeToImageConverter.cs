@@ -17,7 +17,7 @@ namespace MMDB3
 
             if (value == null)
             {
-                return ImageResources.UnknownIcon;
+                return null;
             }
 
             var _value = (SearchResultItem)value;
@@ -32,6 +32,8 @@ namespace MMDB3
                     return ImageResources.DirectorIcon;
                 case SearchResultItemType.ActorDirector:
                     return ImageResources.ActorDirectorIcon;
+                    case SearchResultItemType.None:
+                    return ImageResources.UnknownIcon;
                 default:
                     return ImageResources.UnknownIcon;
             }
