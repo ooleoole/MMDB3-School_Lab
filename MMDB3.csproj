@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ImageLoader.cs" />
     <Compile Include="ImageResources.cs" />
     <Compile Include="MovieDatabase\Repositories\CastOrCrewRepository.cs" />
     <Compile Include="MovieDatabase\Domain\Entities\Movie.cs" />
@@ -110,13 +111,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\actor.png" />
+    <EmbeddedResource Include="Resources\actor.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\movie.png" />
+    <EmbeddedResource Include="Resources\movie.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\director.png" />
+    <EmbeddedResource Include="Resources\director.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="CastOrCrew.xml" />
@@ -126,10 +127,10 @@
     <EmbeddedResource Include="Resources\actor_director.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\unknown.png" />
+    <EmbeddedResource Include="Resources\unknown.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Image1.png" />
+    <EmbeddedResource Include="Resources\Image1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

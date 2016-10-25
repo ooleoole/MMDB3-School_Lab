@@ -9,7 +9,7 @@
     <Window.Resources>
         <local:SearchResultItemStringConverter x:Key="SearchResultItemStringConverter"/>
         <local:TypeToImageConverter x:Key="TypeToImageConverter"/>
-        
+
         <Image x:Key="ImageSourceActor" Source="Resources/actor.png"/>
         <Image x:Key="ImageSourceDirector" Source="Resources\director.png"/>
         <Image x:Key="ImageSourceActorDirector" Source="Resources\actor_director.png"/>
@@ -27,7 +27,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="TBSearchFeild" Grid.Row="0" Grid.Column="0" Margin="5, 5, 5, 0" VerticalContentAlignment="Bottom" TextChanged="TBSearchFeild_OnTextChanged"/>
-        
+
         <TextBlock IsHitTestVisible="False" Grid.Row="0" Grid.Column="0" Text="Search" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="9,4,0,0" Foreground="gray">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
@@ -45,29 +45,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="50">
-                        <Image Tag="{Binding Type}" Width="48" Height="48">
-                            <Image.Style>
-                                <Style TargetType="{x:Type Image}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path= Type}" Value="Actor">
-                                            <Setter Property="Source" Value= "Resources/unknown.png" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path= Type}" Value="Director">
-                                            <Setter Property="Source" Value="Resources/unknown.png" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path= Type}" Value="ActorDirector">
-                                            <Setter Property="Source" Value="Resources/unknown.png" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path= Type}" Value="Movie">
-                                            <Setter Property="Source" Value="Resources/unknown.png" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=Type}" Value="None">
-                                            <Setter Property="Source" Value="Resources/unknown.png" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
+                        <Image Source="{Binding Converter={StaticResource TypeToImageConverter}}"/>
                         <TextBlock FontSize="13" VerticalAlignment="Center" Text="{Binding Converter={StaticResource SearchResultItemStringConverter}}" />
                     </StackPanel>
                 </DataTemplate>
@@ -76,21 +54,19 @@
         <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                
+
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal">
-                <Image Source="Resources/unknown.png"/>
-                <Image Source="Resources/actor_director.png"/>
-                <Image Source="Resources/director.png"/>
-                <Image Source="Resources/movie.png"/>
+            <StackPanel x:Name="SPSelectedItemHeader" Orientation="Horizontal">
+                
+                
 
                 <TextBlock Margin="5" Text="Test 1976-1647" FontSize="34"/>
-            
-         </StackPanel>
+
+            </StackPanel>
 
         </Grid>
     </Grid>

@@ -27,7 +27,7 @@ namespace MMDB.MovieDatabase.Domain.ValueObjects
 
         private static bool IsValid(int year)
         {
-            return year >= FirstMovieProductionYear && year <= DateTime.Today.Year;
+            return year >= FirstMovieProductionYear && year <= DateTime .Today.Year;
         }
         public static bool TryParse(string productionYear, out ProductionYear result)
         {
