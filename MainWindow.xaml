@@ -1,0 +1,94 @@
+﻿<Window x:Class="MMDB3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MMDB3"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <Window.Resources>
+        <local:SearchResultItemStringConverter x:Key="SearchResultItemStringConverter"/>
+        <BitmapImage x:Key="ImageSourceActor" UriSource="C:\Users\Ola\Desktop\MMDB3\Resources\actor.png"/>
+        <BitmapImage x:Key="ImageSourceDirector" UriSource="C:\Users\Ola\Desktop\MMDB3\Resources\director.png"/>
+        <BitmapImage x:Key="ImageSourceActorDirector" UriSource="C:\Users\Ola\Desktop\MMDB3\Resources\actor_director.png"/>
+        <BitmapImage x:Key="ImageSourceMovie" UriSource="C:\Users\Ola\Desktop\MMDB3\Resources\movie.png"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" MinWidth="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="TBSearchFeild" Grid.Row="0" Grid.Column="0" Margin="5, 5, 5, 0" VerticalContentAlignment="Bottom" TextChanged="TBSearchFeild_OnTextChanged"/>
+        
+        <TextBlock IsHitTestVisible="False" Grid.Row="0" Grid.Column="0" Text="Search" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="9,4,0,0" Foreground="gray">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=TBSearchFeild}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <ListBox Name="LBCastCrewOrMovie" Grid.Row="1" Grid.Column="0" Margin="5" SelectionChanged="LBCastCrewOrMovie_OnSelectionChanged"  >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="50">
+                        <Image Tag="{Binding Type}" Width="48" Height="48">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path= Type}" Value="Director">
+                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\director.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path= Type}" Value="Actor">
+                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\actor.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path= Type}" Value="ActorDirector">
+                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\actor_director.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path= Type}" Value="Movie">
+                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\movie.png" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Type}" Value="None">
+                                            <Setter Property="Source" Value="C:\Users\Ola\Desktop\MMDB3\Resources\unknown.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <TextBlock FontSize="13" VerticalAlignment="Center" Text="{Binding Converter={StaticResource SearchResultItemStringConverter}}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="C:\Users\Ola\Desktop\MMDB3\Resources\actor.png"></Image>
+                <TextBlock Margin="5" Text="Test 1976-1647" FontSize="34"/>
+            </StackPanel>
+            
+
+            
+        </Grid>
+    </Grid>
+
+
+</Window>
