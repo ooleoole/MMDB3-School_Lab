@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:MMDB3"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
+
     <Window.Resources>
         <local:SearchResultItemStringConverter x:Key="SearchResultItemStringConverter"/>
         <local:TypeToImageConverter x:Key="TypeToImageConverter"/>
-
     </Window.Resources>
 
     <Grid>
@@ -19,7 +19,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" MinWidth="100"/>
+            <ColumnDefinition Width="auto" MinWidth="200" MaxWidth="400"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="TBSearchFeild" Grid.Row="0" Grid.Column="0" Margin="5, 5, 5, 0" VerticalContentAlignment="Bottom" TextChanged="TBSearchFeild_OnTextChanged"/>
@@ -47,37 +47,31 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" x:Name="SPSelectedItemHeader" Visibility="Visible">
+    
+        <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-
             </Grid.RowDefinitions>
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+            <StackPanel x:Name="SPSelectedItemHeader" Grid.Row="0" Grid.Column="0"  Orientation="Horizontal">
                 <Image  x:Name="ImageIcon" Height="60" Width="60" HorizontalAlignment="Left" Source="{Binding Converter={StaticResource TypeToImageConverter}}"/>
                 <TextBlock Margin="5" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" Text="{Binding Converter={StaticResource SearchResultItemStringConverter}}"/>
             </StackPanel>
 
-            <TextBlock x:Name="TBHeaderActedInActors" Grid.Row="1" Grid.Column="0"  FontSize="16" Text=""/>
+            <TextBlock x:Name="TBHeaderActedInActors" Grid.Row="1" Grid.Column="0"  FontSize="16" FontWeight="Bold" Text=""/>
             <TextBlock x:Name="TBContentActedInActors" Grid.Row="2" Grid.Column="0"/>
-            <TextBlock x:Name="TBHeaderDirectedInDirectedBy" Grid.Row="3" Grid.Column="0"  FontSize="16" Text=""/>
+            <TextBlock x:Name="TBHeaderDirectedInDirectedBy" Grid.Row="3" Grid.Column="0"  FontSize="16" FontWeight="Bold" Text=""/>
             <TextBlock x:Name="TBContentDirectedInDirectedBy" Grid.Row="4" Grid.Column="0"/>
               
-            
-
-
-
-
-
         </Grid>
     </Grid>
 

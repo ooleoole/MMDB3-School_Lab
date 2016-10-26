@@ -1,18 +1,8 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MMDB.MovieDatabase.Domain;
 using MMDB.MovieDatabase.Services;
 using MMDB.MovieDatabase.ValueObjects;
@@ -25,19 +15,15 @@ namespace MMDB3
     /// </summary>
     public partial class MainWindow : Window
     {
-        private FreeTextSearchService SearchService { get; set; }
-        private MovieService MovieService { get; set; }
-        private CastOrCrewService CastOrCrewService { get; set; }
+        private FreeTextSearchService SearchService { get; }
+        private MovieService MovieService { get; }
+        private CastOrCrewService CastOrCrewService { get; }
         public MainWindow()
         {
             InitializeComponent();
             this.SearchService = new FreeTextSearchService();
             this.MovieService = new MovieService();
             this.CastOrCrewService = new CastOrCrewService();
-
-            //ImageIcon.Source = null;
-
-
         }
 
         private void TBSearchFeild_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -53,21 +39,17 @@ namespace MMDB3
 
         private void LBCastCrewOrMovie_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ClearContentHeader();
             var selectedObject = (SearchResultItem)LBCastCrewOrMovie.SelectedItem;
             SPSelectedItemHeader.DataContext = selectedObject;
 
             if (selectedObject == null)
             {
-
                 SPSelectedItemHeader.DataContext = null;
             }
             else
             {
-
                 SelectedObjectContentBuilder(selectedObject);
-
-
-
             }
 
         }
@@ -84,7 +66,6 @@ namespace MMDB3
                     MovieHeaderSetter();
                     ActorsContentSetter(actors);
                     DirectorsContentSetter(directors);
-                    
                     break;
                 case SearchResultItemType.Actor:
                     var actedMovies = CastOrCrewService.GetActedMovies((CastOrCrew)selectedObject.ResultItem);
@@ -97,8 +78,11 @@ namespace MMDB3
                     DirectedInContentSetter(directedMovies);
                     break;
                 case SearchResultItemType.ActorDirector:
+                    var actedIn = CastOrCrewService.GetActedMovies((CastOrCrew) selectedObject.ResultItem);
+                    var directedIn = CastOrCrewService.GetDirectedMovies((CastOrCrew) selectedObject.ResultItem);
+                    ActedInContentSetter(actedIn);
+                    DirectedInContentSetter(directedIn);
                     ActorDirectorHeaderSetter();
-                    
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -113,7 +97,7 @@ namespace MMDB3
         private void ActorHeaderSetter()
         {
             TBHeaderActedInActors.Text = "Actor in";
-            TBHeaderDirectedInDirectedBy.Text = "";
+            TBHeaderDirectedInDirectedBy.Text = null;
         }
         private void ActorDirectorHeaderSetter()
         {
@@ -122,8 +106,8 @@ namespace MMDB3
         }
         private void DirectorHeaderSetter()
         {
-            TBHeaderActedInActors.Text = "";
-            TBContentDirectedInDirectedBy.Text = "Directed in";
+            TBHeaderActedInActors.Text = null;
+            TBHeaderDirectedInDirectedBy.Text = "Directed in";
         }
         private void MovieHeaderSetter()
         {
@@ -157,6 +141,15 @@ namespace MMDB3
         private string ContentBuilder(IEnumerable<Movie> movies)
         {
             return movies.Aggregate("", (current, movie) => current + $"{movie.Title}\n");
+        }
+
+        private void ClearContentHeader()
+        {
+            TBHeaderActedInActors.Text = null;
+            TBHeaderDirectedInDirectedBy.Text = null;
+            TBContentActedInActors.Text = null;
+            TBContentDirectedInDirectedBy.Text = null;
+            
         }
 
 

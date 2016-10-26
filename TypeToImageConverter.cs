@@ -32,7 +32,7 @@ namespace MMDB3
                     return ImageResources.DirectorIcon;
                 case SearchResultItemType.ActorDirector:
                     return ImageResources.ActorDirectorIcon;
-                    case SearchResultItemType.None:
+                case SearchResultItemType.None:
                     return ImageResources.UnknownIcon;
                 default:
                     return ImageResources.UnknownIcon;
