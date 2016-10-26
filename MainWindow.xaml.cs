@@ -26,16 +26,15 @@ namespace MMDB3
     public partial class MainWindow : Window
     {
         private FreeTextSearchService SearchService { get; set; }
-        public BitmapImage ActorIcon { get; set; }
-        public BitmapImage ActorDirectorIcon { get; set; }
-        public BitmapImage DirectorIcon { get; set; }
-        public BitmapImage MovieIcon { get; set; }
-        public BitmapImage UnknownIcon { get; set; }
-
+        private MovieService MovieService { get; set; }
+        private CastOrCrewService CastOrCrewService { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            SearchService = new FreeTextSearchService();
+            this.SearchService = new FreeTextSearchService();
+            this.MovieService = new MovieService();
+            this.CastOrCrewService = new CastOrCrewService();
+
             //ImageIcon.Source = null;
 
 
@@ -43,45 +42,124 @@ namespace MMDB3
 
         private void TBSearchFeild_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            LBCastCrewOrMovie.ItemsSource = SearchService.Search(TBSearchFeild.Text,true);
-            if (TBSearchFeild.Text=="")
+            LBCastCrewOrMovie.ItemsSource = SearchService.Search(TBSearchFeild.Text, true);
+            if (TBSearchFeild.Text == "")
             {
                 LBCastCrewOrMovie.ItemsSource = null;
             }
         }
 
-       
+
 
         private void LBCastCrewOrMovie_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedObject = (SearchResultItem)LBCastCrewOrMovie.SelectedItem;
             SPSelectedItemHeader.DataContext = selectedObject;
-            
-            if (selectedObject==null)
+
+            if (selectedObject == null)
             {
-                
+
                 SPSelectedItemHeader.DataContext = null;
             }
             else
             {
-                if (selectedObject.GetType()==typeof(CastOrCrewSearchResultItem))
-                {
-                    TBActorsActor.Text = "Actor in";
-                    TBDirectorsDirector.Text="Director In";
-                }
-                else if (selectedObject.GetType() == (typeof(MovieSearchResultItem)))
-                {
-                    TBActorsActor.Text = "Actors";
-                    TBDirectorsDirector.Text = "Directors";
 
-                }
-                
-                
+                SelectedObjectContentBuilder(selectedObject);
+
+
+
             }
-          
+
         }
 
-        
+        private void SelectedObjectContentBuilder(SearchResultItem selectedObject)
+        {
+            switch (selectedObject.Type)
+            {
+                case SearchResultItemType.None:
+                    throw new Exception("Invalid Type");
+                case SearchResultItemType.Movie:
+                    var actors = MovieService.GetActors((Movie)selectedObject.ResultItem);
+                    var directors = MovieService.GetDirectors((Movie)selectedObject.ResultItem);
+                    MovieHeaderSetter();
+                    ActorsContentSetter(actors);
+                    DirectorsContentSetter(directors);
+                    
+                    break;
+                case SearchResultItemType.Actor:
+                    var actedMovies = CastOrCrewService.GetActedMovies((CastOrCrew)selectedObject.ResultItem);
+                    ActorHeaderSetter();
+                    ActedInContentSetter(actedMovies);
+                    break;
+                case SearchResultItemType.Director:
+                    DirectorHeaderSetter();
+                    var directedMovies = CastOrCrewService.GetDirectedMovies((CastOrCrew)selectedObject.ResultItem);
+                    DirectedInContentSetter(directedMovies);
+                    break;
+                case SearchResultItemType.ActorDirector:
+                    ActorDirectorHeaderSetter();
+                    
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+
+        }
+
+
+       
+
+        private void ActorHeaderSetter()
+        {
+            TBHeaderActedInActors.Text = "Actor in";
+            TBHeaderDirectedInDirectedBy.Text = "";
+        }
+        private void ActorDirectorHeaderSetter()
+        {
+            TBHeaderActedInActors.Text = "Actor in";
+            TBHeaderDirectedInDirectedBy.Text = "Directed in";
+        }
+        private void DirectorHeaderSetter()
+        {
+            TBHeaderActedInActors.Text = "";
+            TBContentDirectedInDirectedBy.Text = "Directed in";
+        }
+        private void MovieHeaderSetter()
+        {
+            TBHeaderActedInActors.Text = "Actors";
+            TBHeaderDirectedInDirectedBy.Text = "Directed By";
+        }
+
+
+        private void ActedInContentSetter(IEnumerable<Movie> moives)
+        {
+            TBContentActedInActors.Text = ContentBuilder(moives);
+        }
+        private void DirectedInContentSetter(IEnumerable<Movie> moives)
+        {
+            TBContentDirectedInDirectedBy.Text = ContentBuilder(moives);
+        }
+        private void ActorsContentSetter(IEnumerable<CastOrCrew>actors )
+        {
+            TBContentActedInActors.Text = ContentBuilder(actors);
+        }
+        private void DirectorsContentSetter(IEnumerable<CastOrCrew>directors)
+        {
+            TBContentDirectedInDirectedBy.Text = ContentBuilder(directors);
+        }
+
+
+        private string ContentBuilder(IEnumerable<CastOrCrew> persons)
+        {
+            return persons.Aggregate("", (current, person) => current + $"{person.Name}\n");
+        }
+        private string ContentBuilder(IEnumerable<Movie> movies)
+        {
+            return movies.Aggregate("", (current, movie) => current + $"{movie.Title}\n");
+        }
+
+
 
     }
 }
