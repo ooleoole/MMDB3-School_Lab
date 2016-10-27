@@ -67,10 +67,10 @@
                 <TextBlock Margin="5" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" Text="{Binding Converter={StaticResource SearchResultItemStringConverter}}"/>
             </StackPanel>
 
-            <TextBlock x:Name="TBHeaderActedInActors" Grid.Row="1" Grid.Column="0"  FontSize="16" FontWeight="Bold" Text=""/>
-            <TextBlock x:Name="TBContentActedInActors" Grid.Row="2" Grid.Column="0"/>
-            <TextBlock x:Name="TBHeaderDirectedInDirectedBy" Grid.Row="3" Grid.Column="0"  FontSize="16" FontWeight="Bold" Text=""/>
-            <TextBlock x:Name="TBContentDirectedInDirectedBy" Grid.Row="4" Grid.Column="0"/>
+            <TextBlock x:Name="TBHeaderDirectedInDirectedBy" Grid.Row="1" Grid.Column="0"  FontSize="16" FontWeight="Bold" Text=""/>
+            <TextBlock x:Name="TBContentDirectedInDirectedBy" Grid.Row="2" Grid.Column="0"/>
+            <TextBlock x:Name="TBHeaderActedInActors" Grid.Row="3" Grid.Column="0"  FontSize="16" FontWeight="Bold" Text=""/>
+            <TextBlock x:Name="TBContentActedInActors" Grid.Row="4" Grid.Column="0"/>
               
         </Grid>
     </Grid>

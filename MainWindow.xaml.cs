@@ -28,6 +28,7 @@ namespace MMDB3
 
         private void TBSearchFeild_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+          
             LBCastCrewOrMovie.ItemsSource = SearchService.Search(TBSearchFeild.Text, true);
             if (TBSearchFeild.Text == "")
             {
@@ -64,15 +65,18 @@ namespace MMDB3
                     var actors = MovieService.GetActors((Movie)selectedObject.ResultItem);
                     var directors = MovieService.GetDirectors((Movie)selectedObject.ResultItem);
                     MovieHeaderSetter();
+                    VisabilitySetterMovies();
                     ActorsContentSetter(actors);
                     DirectorsContentSetter(directors);
                     break;
                 case SearchResultItemType.Actor:
                     var actedMovies = CastOrCrewService.GetActedMovies((CastOrCrew)selectedObject.ResultItem);
+                    VisabilitySetterActors();
                     ActorHeaderSetter();
                     ActedInContentSetter(actedMovies);
                     break;
                 case SearchResultItemType.Director:
+                    VisabilitySetterDirectrors();
                     DirectorHeaderSetter();
                     var directedMovies = CastOrCrewService.GetDirectedMovies((CastOrCrew)selectedObject.ResultItem);
                     DirectedInContentSetter(directedMovies);
@@ -80,6 +84,7 @@ namespace MMDB3
                 case SearchResultItemType.ActorDirector:
                     var actedIn = CastOrCrewService.GetActedMovies((CastOrCrew) selectedObject.ResultItem);
                     var directedIn = CastOrCrewService.GetDirectedMovies((CastOrCrew) selectedObject.ResultItem);
+                    VisabilitySetterActorsDirectrors();
                     ActedInContentSetter(actedIn);
                     DirectedInContentSetter(directedIn);
                     ActorDirectorHeaderSetter();
@@ -90,9 +95,6 @@ namespace MMDB3
 
 
         }
-
-
-       
 
         private void ActorHeaderSetter()
         {
@@ -106,8 +108,8 @@ namespace MMDB3
         }
         private void DirectorHeaderSetter()
         {
-            TBHeaderActedInActors.Text = null;
             TBHeaderDirectedInDirectedBy.Text = "Directed in";
+            TBHeaderActedInActors.Text = null;
         }
         private void MovieHeaderSetter()
         {
@@ -115,22 +117,58 @@ namespace MMDB3
             TBHeaderDirectedInDirectedBy.Text = "Directed By";
         }
 
+        private void VisabilitySetterActors()
+        {
+            TBHeaderActedInActors.Visibility = Visibility.Visible;
+            TBContentActedInActors.Visibility=Visibility.Visible;
+            TBHeaderDirectedInDirectedBy.Visibility = Visibility.Collapsed;
+            TBContentDirectedInDirectedBy.Visibility=Visibility.Collapsed;
+
+        }
+
+        private void VisabilitySetterActorsDirectrors()
+        {
+            TBHeaderActedInActors.Visibility = Visibility.Visible;
+            TBContentActedInActors.Visibility = Visibility.Visible;
+            TBHeaderDirectedInDirectedBy.Visibility = Visibility.Visible;
+            TBContentDirectedInDirectedBy.Visibility = Visibility.Visible;
+        }
+        private void VisabilitySetterDirectrors()
+        {
+            TBHeaderActedInActors.Visibility = Visibility.Collapsed;
+            TBContentActedInActors.Visibility = Visibility.Collapsed;
+            TBHeaderDirectedInDirectedBy.Visibility = Visibility.Visible;
+            TBContentDirectedInDirectedBy.Visibility = Visibility.Visible;
+        }
+        private void VisabilitySetterMovies()
+        {
+            TBHeaderActedInActors.Visibility = Visibility.Visible;
+            TBContentActedInActors.Visibility = Visibility.Visible;
+            TBHeaderDirectedInDirectedBy.Visibility = Visibility.Visible;
+            TBContentDirectedInDirectedBy.Visibility = Visibility.Visible;
+        }
+
+
 
         private void ActedInContentSetter(IEnumerable<Movie> moives)
         {
             TBContentActedInActors.Text = ContentBuilder(moives);
+            
         }
-        private void DirectedInContentSetter(IEnumerable<Movie> moives)
+        private void DirectedInContentSetter(IEnumerable<Movie> movies)
         {
-            TBContentDirectedInDirectedBy.Text = ContentBuilder(moives);
+            TBContentDirectedInDirectedBy.Text = ContentBuilder(movies);
+            
         }
         private void ActorsContentSetter(IEnumerable<CastOrCrew>actors )
         {
             TBContentActedInActors.Text = ContentBuilder(actors);
+            
         }
         private void DirectorsContentSetter(IEnumerable<CastOrCrew>directors)
         {
             TBContentDirectedInDirectedBy.Text = ContentBuilder(directors);
+            
         }
 
 
@@ -149,7 +187,6 @@ namespace MMDB3
             TBHeaderDirectedInDirectedBy.Text = null;
             TBContentActedInActors.Text = null;
             TBContentDirectedInDirectedBy.Text = null;
-            
         }
 
 
