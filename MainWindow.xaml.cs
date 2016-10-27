@@ -104,7 +104,7 @@ namespace MMDB3
         private void ActorDirectorHeaderSetter()
         {
             TBHeaderActedInActors.Text = "Actor in";
-            TBHeaderDirectedInDirectedBy.Text = "Directed in";
+            TBHeaderDirectedInDirectedBy.Text = "Director in";
         }
         private void DirectorHeaderSetter()
         {
